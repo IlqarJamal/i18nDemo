@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <label id="name">Name</label>
+        <br>
+        <label id="lastname">Last Name</label>
+        <br>
+        <label id="language">Please, select language</label>
+        <br>
+        <input type="radio" name="selectLan" value="en">English
+        <input type="radio" name="selectLan" value="ru">Russian
+        <input type="radio" name="selectLan" value="de">Germany
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                console.log("some val " + $('#name').text());
+                console.log("some val " + $('#lastname').text());
+                $('input[type=radio][name=selectLan]').change(function () {
+                    var selectedLanguange = this.value;
+                    if (selectedLanguange === "en") {
+                        $.ajax({
+                            url: "LanguageServlet",
+                            type: "POST",
+                            dataType: "json",
+                            data: {action: "changeLang", data: "en"},
+                            success: function (response) {
+                                $.each(response, function (i, item) {
+                                    console.log(i + " " + item);
+                                    $('#' + i).text(item.replace(/"/g, ""));
+                                });
+                            }, error: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    } else if (selectedLanguange === "ru") {
+                        $.ajax({
+                            url: "LanguageServlet",
+                            type: "POST",
+                            dataType: "json",
+                            data: {action: "changeLang", data: "ru"},
+                            success: function (response) {
+                                $.each(response, function (i, item) {
+                                    console.log(i + " " + item);
+                                    $('#' + i).text(item.replace(/"/g, ""));
+                                });
+                            }, error: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    } else if (selectedLanguange === "de") {
+                        $.ajax({
+                            url: "LanguageServlet",
+                            type: "POST",
+                            dataType: "json",
+                            data: {action: "changeLang", data: "de"},
+                            success: function (response) {
+                                $.each(response, function (i, item) {
+                                    console.log(i + " " + item);
+                                    $('#' + i).text(item.replace(/"/g, ""));
+                                });
+                            }, error: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
