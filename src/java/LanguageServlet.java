@@ -34,13 +34,24 @@ public class LanguageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Define action
         String action = request.getParameter("action");
+        //Define data
         String data = request.getParameter("data");
+        
+        //Create locale object
         Locale locale = null;
+        //Create resource bundle object
         ResourceBundle resourceBundle = null;
+        
+        //Create key - value pair collection for response
         Map<String , String> map = new HashMap<String , String>();
+        
+        //Here i use Gson library for working with Json
         Gson gson = new GsonBuilder().create();
         
+        //Based on action i can switch to different options.
+        //I print predefined text to output just for debugging
         try {
             if (action.equals("changeLang")) {
                 if (data.equals("en")) {
@@ -63,10 +74,12 @@ public class LanguageServlet extends HttpServlet {
                     System.out.println(resourceBundle.getString("LANGUAGE"));
                 }
             }
+            //Put data to collection.Keys are equals to index.html label's id values.
             map.put("name", resourceBundle.getString("NAME"));
             map.put("lastname", resourceBundle.getString("LAST_NAME"));
             map.put("language", resourceBundle.getString("LANGUAGE"));
-           
+            
+            //Send response to browser.
             response.getWriter().write(gson.toJson(map));
         } catch (Exception e) {
             e.printStackTrace();

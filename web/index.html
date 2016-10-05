@@ -23,19 +23,23 @@ and open the template in the editor.
         <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript">
             $(function () {
-                console.log("some val " + $('#name').text());
-                console.log("some val " + $('#lastname').text());
+                //Putting trigger on radio buttons check change event.
                 $('input[type=radio][name=selectLan]').change(function () {
+                    //Get value of selected radio button.
                     var selectedLanguange = this.value;
+                    //Compare value and sends request to servlet using ajax.
                     if (selectedLanguange === "en") {
                         $.ajax({
                             url: "LanguageServlet",
                             type: "POST",
                             dataType: "json",
+                            //Here i define which action i perform , and which language i select based on radio button value.
                             data: {action: "changeLang", data: "en"},
                             success: function (response) {
+                                //Iterate through response to change label's text using keys as labels id and values as labels new text.
                                 $.each(response, function (i, item) {
                                     console.log(i + " " + item);
+                                    //I use replace to remove double quotes from responsed text.
                                     $('#' + i).text(item.replace(/"/g, ""));
                                 });
                             }, error: function (response) {
